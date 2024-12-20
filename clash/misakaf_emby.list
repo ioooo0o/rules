@@ -9,7 +9,7 @@
 +.stream4.misakaf.org
 # 通配所有 .misakaf.org 的域名
 +.misakaf.org
-# 匹配 misakaf 的 Workers CDN
+# 匹配 misakaf 的 Workers 的域名
 +.misakaf.workers.dev
 
 
