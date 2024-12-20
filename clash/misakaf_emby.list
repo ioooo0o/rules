@@ -1,9 +1,12 @@
 # NAME: misakaf_emby
 # AUTHOR: ioooo0o
 # REPO: https://github.com/ioooo0o/rules
+
+
+# 通配所有 .misakaf.org 的域名
 +.misakaf.org
+# 匹配 misakaf 的 Workers CDN
 +.misakaf.workers.dev
-stream1.misakaf.org
-stream2.misakaf.org
-stream3.misakaf.org
-stream4.misakaf.org
+# 匹配所有 stream 子域
+stream*.misakaf.org
+
