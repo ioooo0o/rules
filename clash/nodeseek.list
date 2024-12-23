@@ -1,0 +1,6 @@
+# NAME: nodeseek
+# AUTHOR: ioooo0o
+# REPO: https://github.com/ioooo0o/rules
+
+# 匹配所有 nodeseek 的域名
++.nodeseek.com
