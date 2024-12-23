@@ -14,7 +14,7 @@
 
 # 匹配所有 stream 的域名
 +.*.misakaf.org
-
++.misakaf.org
 # 匹配 misakaf 的 Workers 的域名
 +.misakaf.workers.dev
 
