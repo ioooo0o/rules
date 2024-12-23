@@ -3,5 +3,5 @@
 # REPO: https://github.com/ioooo0o/rules
 
 # 匹配所有 v2ex 的域名
-*.v2ex.com
++.v2ex.com
 
