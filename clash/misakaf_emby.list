@@ -17,6 +17,7 @@
 +.misakaf.org
 # 匹配 misakaf 的 Workers 的域名
 +.misakaf.workers.dev
-
+#匹配所有顶级域名下的misakaf域名
++.misakaf.*
 
 
