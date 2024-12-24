@@ -2,12 +2,9 @@
 # AUTHOR: ioooo0o
 # REPO: https://github.com/ioooo0o/rules
 
-DOMAIN-SUFFIX,genspark.ai
-DOMAIN-SUFFIX,www.genspark.ai
-DOMAIN-SUFFIX,api.genspark.ai
-DOMAIN-SUFFIX,static.genspark.ai
-DOMAIN-SUFFIX,assets.genspark.ai
-DOMAIN-SUFFIX,cdn.genspark.ai
-DOMAIN-SUFFIX,chat.genspark.ai
-DOMAIN-SUFFIX,auth.genspark.ai
-DOMAIN-KEYWORD,genspark
+www.genspark.ai
++.genspark.ai
++.cdn.genspark.ai
++.sspark.ai
+#匹配所有顶级域名下的genspark域名
++.genspark.*
