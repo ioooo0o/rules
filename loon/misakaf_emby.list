@@ -9,3 +9,5 @@ DOMAIN,stream3.misakaf.org
 DOMAIN,stream4.misakaf.org
 DOMAIN-SUFFIX,misakaf.workers.dev
 DOMAIN-KEYWORD,misakaf
+DOMAIN,wf.vban.xyz
+DOMAIN-SUFFIX,vban.xyz
