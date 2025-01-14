@@ -19,5 +19,6 @@
 +.misakaf.workers.dev
 #匹配所有顶级域名下的misakaf域名
 +.misakaf.*
-
-
+#匹配所有顶级域名下的vban域名
+wf.vban.xyz
++.vban.xyz
