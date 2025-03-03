@@ -3,15 +3,11 @@
 # REPO: https://github.com/ioooo0o/rules
 payload:
   - DOMAIN-SUFFIX,misakaf.org
-  - DOMAIN,stream1.misakaf.org
-  - DOMAIN,stream2.misakaf.org
-  - DOMAIN,stream3.misakaf.org
-  - DOMAIN,stream4.misakaf.org
   - DOMAIN-SUFFIX,misakaf.workers.dev
   - DOMAIN-KEYWORD,misakaf
-  - DOMAIN,wf.vban.xyz
+  - DOMAIN-SUFFIX,wf.vban.xyz
   - DOMAIN-SUFFIX,vban.xyz
-  - DOMAIN,super.yezi.my
-  - DOMAIN,yezi.697758.best
-  - DOMAIN,yyds.yezi.my
-  - DOMAIN,yezi.hannn.me
+  - DOMAIN-SUFFIX,super.yezi.my
+  - DOMAIN-SUFFIX,yezi.697758.best
+  - DOMAIN-SUFFIX,yyds.yezi.my
+  - DOMAIN-SUFFIX,yezi.hannn.me
