@@ -9,7 +9,8 @@ payload:
   - DOMAIN,stream4.misakaf.org
   - DOMAIN-SUFFIX,misakaf.workers.dev
   - DOMAIN-KEYWORD,misakaf
-  - DOMAIN,wf.vban.xyz
+  - DOMAIN-SUFFIX,vban.xyz
+  - DOMAIN-SUFFIX,mooguu.xyz
   - DOMAIN-SUFFIX,vban.xyz
   - DOMAIN-SUFFIX,yezi.my
   - DOMAIN,yezi.697758.best
