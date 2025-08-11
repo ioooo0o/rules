@@ -2,11 +2,11 @@
 # AUTHOR: ioooo0o
 # REPO: https://github.com/ioooo0o/rules
 payload:
-  - DOMAIN-KEYWORD, m-team
-  - DOMAIN-SUFFIX, vinikel.icu 
-  - DOMAIN-SUFFIX, cspt.top
-  - DOMAIN-SUFFIX, cspt.cc
-  - DOMAIN-SUFFIX, cspt.date
-  - DOMAIN-SUFFIX, ptcafe.club
-  - DOMAIN-SUFFIX, ptlover.cc 
-  - DOMAIN-SUFFIX, torrenthub.club
+  - DOMAIN-KEYWORD,m-team
+  - DOMAIN-SUFFIX,vinikel.icu 
+  - DOMAIN-SUFFIX,cspt.top
+  - DOMAIN-SUFFIX,cspt.cc
+  - DOMAIN-SUFFIX,cspt.date
+  - DOMAIN-SUFFIX,ptcafe.club
+  - DOMAIN-SUFFIX,ptlover.cc 
+  - DOMAIN-SUFFIX,torrenthub.club
