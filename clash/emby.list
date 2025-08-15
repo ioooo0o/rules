@@ -2,26 +2,7 @@
 # AUTHOR: ioooo0o
 # REPO: https://github.com/ioooo0o/rules
 
-# 匹配所有 stream 的域名
-#+.stream1.misakaf.org
-#+.stream2.misakaf.org
-#+.stream3.misakaf.org
-#+.stream4.misakaf.org
-# 通配所有 .misakaf.org 的域名
-#+.misakaf.org
-# 匹配 misakaf 的 Workers 的域名
-#+.misakaf.workers.dev
-
-# 匹配所有 stream 的域名
-+.*.misakaf.org
-+.misakaf.org
-# 匹配 misakaf 的 Workers 的域名
-+.misakaf.workers.dev
-#匹配所有顶级域名下的misakaf域名
-+.misakaf.*
-#匹配所有顶级域名下的vban域名
-wf.vban.xyz
+#匹配所有顶级域名下的域名
 +.vban.xyz
-#叶子emby
 +.yezi.my
 
