@@ -2,6 +2,7 @@
 # AUTHOR: ioooo0o
 # REPO: https://github.com/ioooo0o/rules
 payload:
+  - DOMAIN-KEYWORD,tracker
   - DOMAIN-KEYWORD,m-team
   - DOMAIN-SUFFIX,vinikel.icu 
   - DOMAIN-SUFFIX,cspt.top
