@@ -1,6 +1,6 @@
 # NAME: pt
 # AUTHOR: ioooo0o
-# REPO: https://github.com/ioooo0o/rules
+# REPO: https://github.com/ioooo0o/rules cangbao.ge
 payload:
   - DOMAIN-KEYWORD,tracker
   - DOMAIN-KEYWORD,m-team
@@ -11,3 +11,4 @@ payload:
   - DOMAIN-SUFFIX,ptcafe.club
   - DOMAIN-SUFFIX,ptlover.cc 
   - DOMAIN-SUFFIX,torrenthub.club
+  - DOMAIN-SUFFIX,cangbao.ge
