@@ -1,9 +1,0 @@
-# NAME: emby
-# AUTHOR: ioooo0o
-# REPO: https://github.com/ioooo0o/rules
-
-#匹配所有顶级域名下的域名
-+.vban.xyz
-+.mooguu.xyz
-+.yezi.my
-+.191920.xyz
