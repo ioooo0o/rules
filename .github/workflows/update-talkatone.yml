@@ -9,26 +9,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Fetch source
         run: |
           SRC_URL="https://raw.githubusercontent.com/LOWERTOP/Shadowrocket-First/refs/heads/main/Talkatone.sgmodule"
           curl -fsSL "$SRC_URL" -o source.sgmodule
+
       - name: Convert to payload YAML (write to clash/)
         run: |
           mkdir -p clash
-          cat > clash/Talkatone.payload.yml <<'YAML'
+          cat > clash/Talkatone.payload.yml <<'EOF'
 # NAME: Talkatone
 # REPO: https://github.com/ioooo0o/rules
 # 整理作者：https://github.com/LOWERTOP
 # 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First
 payload:
-YAML
+EOF
           # 抓取以 DOMAIN- / DOMAIN-WILDCARD / IP-CIDR 开头的行，保留逗号后所有内容（例如保留 no-resolve）
           grep -E '^(DOMAIN-|DOMAIN-WILDCARD|IP-CIDR)' source.sgmodule | sed -E 's/^[[:space:]]*//' | while IFS= read -r line; do
             key="${line%%,*}"
             rest="${line#*,}"
-            echo "  - ${key},${rest}" >> clash/Talkatone.payload.yml
+            printf '  - %s,%s\n' "$key" "$rest" >> clash/Talkatone.payload.yml
           done
+
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
