@@ -25,7 +25,6 @@ jobs:
 # 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First
 payload:
 EOF
-          # 抓取以 DOMAIN- / DOMAIN-WILDCARD / IP-CIDR 开头的行，保留逗号后所有内容（例如保留 no-resolve）
           grep -E '^(DOMAIN-|DOMAIN-WILDCARD|IP-CIDR)' source.sgmodule | sed -E 's/^[[:space:]]*//' | while IFS= read -r line; do
             key="${line%%,*}"
             rest="${line#*,}"
