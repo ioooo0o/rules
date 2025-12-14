@@ -18,20 +18,19 @@ jobs:
       - name: Convert to payload YAML (write to clash/)
         run: |
           mkdir -p clash
-          cat > clash/Talkatone.payload.yml <<'PAYLOAD'
-# NAME: Talkatone
-# REPO: https://github.com/ioooo0o/rules
-# 整理作者：https://github.com/LOWERTOP
-# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First
-payload:
-PAYLOAD
+          # 写入 header（覆盖文件）
+          printf '%s\n' \
+            '# NAME: Talkatone' \
+            '# REPO: https://github.com/ioooo0o/rules' \
+            '# 整理作者：https://github.com/LOWERTOP' \
+            '# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First' \
+            'payload:' > clash/Talkatone.payload.yml
+
+          # 抽取规则行并格式化追加（保留逗号后所有内容）
           grep -E '^(DOMAIN-|DOMAIN-WILDCARD|IP-CIDR)' source.sgmodule \
             | sed -E 's/^[[:space:]]*//' \
-            | while IFS= read -r line; do
-              key="${line%%,*}"
-              rest="${line#*,}"
-              printf '  - %s,%s\n' "$key" "$rest" >> clash/Talkatone.payload.yml
-            done
+            | awk -F, '{ key=$1; $1=""; sub(/^,/, ""); printf "  - %s,%s\n", key, $0 }' \
+            >> clash/Talkatone.payload.yml
 
       - name: Commit changes
         run: |
