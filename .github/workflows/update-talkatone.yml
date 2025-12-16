@@ -1,14 +1,14 @@
 Name: Update Talkatone rules
 on:
   schedule:
-    - cron: '0 0 * * *'   # 每天 00:00 UTC 运行
-  workflow_dispatch:      # 允许手动触发
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
     
-    # 💥 关键修复：允许工作流写入仓库内容
+    # 修复权限：允许 GITHUB_TOKEN 写入
     permissions:
       contents: write 
 
@@ -21,7 +21,7 @@ jobs:
           SRC_URL="https://raw.githubusercontent.com/LOWERTOP/Shadowrocket-First/refs/heads/main/Talkatone.sgmodule"
           echo "Fetching source from $SRC_URL"
           
-          # 使用 -f（失败不显示进度）-s（静默）-S（出错显示错误）
+          # 确保下载成功
           if ! curl -fsSL "$SRC_URL" -o source.sgmodule; then
             echo "Error fetching source file. Check URL or network."
             exit 1
@@ -32,16 +32,15 @@ jobs:
           mkdir -p clash
           OUTPUT_FILE="clash/Talkatone.payload.yml"
 
-          # 1. 写入 header（覆盖文件）
+          # 1. 写入 header
           printf '%s\n' \
             '# NAME: Talkatone' \
             '# REPO: https://github.com/ioooo0o/rules' \
-            '# 整理作者：https://github.com/LOWERTOP' \
-            '# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First' \
+            '# 整理作者：https://github.com/LOWERTOP/LOWERTOP/Shadowrocket-First' \
+            '# 仓库地址：https://github.com/ioooo0o/rules' \
             'payload:' > "$OUTPUT_FILE"
 
-          # 2. 抽取规则行并格式化追加
-          # 规则行必须以 DOMAIN-, DOMAIN-WILDCARD, IP-CIDR 开头，且不包含注释 (#)
+          # 2. 抽取规则行
           grep -E '^(DOMAIN-|DOMAIN-WILDCARD|IP-CIDR)' source.sgmodule \
             | grep -vE '^#' \
             | sed -E 's/^[[:space:]]*//' \
@@ -52,20 +51,21 @@ jobs:
              echo "Error: Output file is empty or conversion failed."
              exit 1
           fi
-          echo "Conversion complete. Rules written to $OUTPUT_FILE"
+          echo "Conversion complete."
 
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          # 检查文件是否有实际变化
           git add clash/Talkatone.payload.yml
+          
+          # 检查变化
           if git diff --cached --quiet; then
-            echo "No changes found in clash/Talkatone.payload.yml. Exiting."
+            echo "No changes."
             exit 0
           fi
           
-          # 提交并推送更改
+          # 提交并推送
           git commit -m "chore: update clash/Talkatone.payload.yml from upstream"
           git push
