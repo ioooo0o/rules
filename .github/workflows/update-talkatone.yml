@@ -1,45 +1,70 @@
-name: Update Talkatone rules
+Name: Update Talkatone rules # 工作流名称
 on:
   schedule:
     - cron: '0 0 * * *'   # 每天 00:00 UTC 运行
-  workflow_dispatch:
+  workflow_dispatch:      # 允许手动触发
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    
+    # 🌟 修复权限错误的关键步骤：确保 GITHUB_TOKEN 有写入权限
+    permissions:
+      contents: write 
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Fetch source
         run: |
           SRC_URL="https://raw.githubusercontent.com/LOWERTOP/Shadowrocket-First/refs/heads/main/Talkatone.sgmodule"
-          curl -fsSL "$SRC_URL" -o source.sgmodule
+          echo "Fetching source from $SRC_URL"
+          # 使用 -f（失败不显示进度）-s（静默）-S（出错显示错误）
+          if ! curl -fsSL "$SRC_URL" -o source.sgmodule; then
+            echo "Error fetching source file. Check URL or network."
+            exit 1
+          fi
 
       - name: Convert to payload YAML (write to clash/)
         run: |
           mkdir -p clash
-          # 写入 header（覆盖文件）
+          OUTPUT_FILE="clash/Talkatone.payload.yml"
+
+          # 1. 写入 header（覆盖文件）
           printf '%s\n' \
             '# NAME: Talkatone' \
             '# REPO: https://github.com/ioooo0o/rules' \
             '# 整理作者：https://github.com/LOWERTOP' \
             '# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First' \
-            'payload:' > clash/Talkatone.payload.yml
+            'payload:' > "$OUTPUT_FILE"
 
-          # 抽取规则行并格式化追加（保留逗号后所有内容）
+          # 2. 抽取规则行并格式化追加
+          # 规则行必须以 DOMAIN-, DOMAIN-WILDCARD, IP-CIDR 开头，且不包含注释 (#)
           grep -E '^(DOMAIN-|DOMAIN-WILDCARD|IP-CIDR)' source.sgmodule \
+            | grep -vE '^#' \
             | sed -E 's/^[[:space:]]*//' \
             | awk -F, '{ key=$1; $1=""; sub(/^,/, ""); printf "  - %s,%s\n", key, $0 }' \
-            >> clash/Talkatone.payload.yml
+            >> "$OUTPUT_FILE"
+
+          if [ ! -s "$OUTPUT_FILE" ]; then
+             echo "Error: Output file is empty or conversion failed."
+             exit 1
+          fi
+          echo "Conversion complete. Rules written to $OUTPUT_FILE"
 
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # 检查文件是否有实际变化
           git add clash/Talkatone.payload.yml
           if git diff --cached --quiet; then
-            echo "No changes"
+            echo "No changes found in clash/Talkatone.payload.yml. Exiting."
             exit 0
           fi
+          
+          # 提交并推送更改
           git commit -m "chore: update clash/Talkatone.payload.yml from upstream"
           git push
