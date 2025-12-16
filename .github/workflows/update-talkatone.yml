@@ -1,4 +1,4 @@
-Name: Update Talkatone rules # 工作流名称
+Name: Update Talkatone rules
 on:
   schedule:
     - cron: '0 0 * * *'   # 每天 00:00 UTC 运行
@@ -8,7 +8,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     
-    # 🌟 修复权限错误的关键步骤：确保 GITHUB_TOKEN 有写入权限
+    # 💥 关键修复：允许工作流写入仓库内容
     permissions:
       contents: write 
 
@@ -20,6 +20,7 @@ jobs:
         run: |
           SRC_URL="https://raw.githubusercontent.com/LOWERTOP/Shadowrocket-First/refs/heads/main/Talkatone.sgmodule"
           echo "Fetching source from $SRC_URL"
+          
           # 使用 -f（失败不显示进度）-s（静默）-S（出错显示错误）
           if ! curl -fsSL "$SRC_URL" -o source.sgmodule; then
             echo "Error fetching source file. Check URL or network."
