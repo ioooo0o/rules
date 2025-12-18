@@ -27,23 +27,27 @@ jobs:
           mkdir -p openclash
           OUTPUT_FILE="openclash/Talkatone.payload.list"
 
-          # 1. 写入 Header
+          # 1. 写入包含指定作者和仓库的 Header
           printf '%s\n' \
             '# NAME: Talkatone' \
             '# REPO: https://github.com/ioooo0o/rules' \
-            '# UPDATED: '"$(date)" > "$OUTPUT_FILE"
+            '# 整理作者：https://github.com/LOWERTOP' \
+            '# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First' \
+            'payload:' > "$OUTPUT_FILE"
 
-          # 2. 抽取规则并严格格式化 (确保使用标准半角空格)
+          # 2. 抽取规则并格式化追加（确保使用标准半角空格，防止 0 秒报错）
           grep -E '^(DOMAIN-|DOMAIN-WILDCARD|IP-CIDR)' source.sgmodule \
             | grep -vE '^#' \
             | sed -E 's/^[[:space:]]*//' \
-            | awk -F, '{ key=$1; $1=""; sub(/^,/, ""); printf "payload:\n  - %s,%s\n", key, $0 }' \
-            | sed 's/payload://g' >> "$OUTPUT_FILE"
-          
-          # 清除可能产生的多余空行并确保格式整洁
-          sed -i '/^[[:space:]]*$/d' "$OUTPUT_FILE"
-          # 在首行 payload 前加上正确标识（如果需要纯 list 格式，可根据需求调整）
-          sed -i '/# REPO/a payload:' "$OUTPUT_FILE"
+            | awk -F, '{ key=$1; $1=""; sub(/^,/, ""); printf "  - %s,%s\n", key, $0 }' \
+            >> "$OUTPUT_FILE"
+
+          # 检查文件是否生成成功
+          if [ ! -s "$OUTPUT_FILE" ]; then
+             echo "Error: Output file is empty."
+             exit 1
+          fi
+          echo "Conversion complete: $OUTPUT_FILE"
 
       - name: Commit changes
         run: |
