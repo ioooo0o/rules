@@ -27,27 +27,33 @@ jobs:
           mkdir -p openclash
           OUTPUT_FILE="openclash/Talkatone.payload.list"
 
-          # 1. 写入包含指定作者和仓库的 Header
+          # 1. 写入 Header (完全匹配您的示例格式)
           printf '%s\n' \
             '# NAME: Talkatone' \
             '# REPO: https://github.com/ioooo0o/rules' \
             '# 整理作者：https://github.com/LOWERTOP' \
-            '# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First' \
-            'payload:' > "$OUTPUT_FILE"
+            '# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First' > "$OUTPUT_FILE"
 
-          # 2. 抽取规则并格式化追加（确保使用标准半角空格，防止 0 秒报错）
+          # 2. 抽取、清洗并格式化规则
+          # 逻辑：匹配关键词 -> 移除行首空格 -> 移除逗号后的空格 -> 转换逗号为标准格式
           grep -E '^(DOMAIN-|DOMAIN-WILDCARD|IP-CIDR)' source.sgmodule \
             | grep -vE '^#' \
             | sed -E 's/^[[:space:]]*//' \
-            | awk -F, '{ key=$1; $1=""; sub(/^,/, ""); printf "  - %s,%s\n", key, $0 }' \
-            >> "$OUTPUT_FILE"
+            | sed 's/, /,/g' \
+            | awk -F, '{
+                # 重新拼装，确保只有第一个逗号后有一个空格，后续部分保持原样
+                action = $2;
+                options = "";
+                for(i=3; i<=NF; i++) options = options " " $i;
+                printf "%s, %s%s\n", $1, action, options
+              }' >> "$OUTPUT_FILE"
 
-          # 检查文件是否生成成功
+          # 检查结果
           if [ ! -s "$OUTPUT_FILE" ]; then
              echo "Error: Output file is empty."
              exit 1
           fi
-          echo "Conversion complete: $OUTPUT_FILE"
+          echo "Success: $OUTPUT_FILE has been updated."
 
       - name: Commit changes
         run: |
@@ -61,5 +67,5 @@ jobs:
             exit 0
           fi
           
-          git commit -m "chore: update openclash/Talkatone.payload.list"
+          git commit -m "chore: update Talkatone.payload.list format"
           git push
