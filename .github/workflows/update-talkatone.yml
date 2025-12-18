@@ -27,21 +27,20 @@ jobs:
           mkdir -p openclash
           OUTPUT_FILE="openclash/Talkatone.payload.list"
 
-          # 1. 写入 Header (完全匹配您的示例格式)
+          # 1. 写入 Header
           printf '%s\n' \
             '# NAME: Talkatone' \
             '# REPO: https://github.com/ioooo0o/rules' \
             '# 整理作者：https://github.com/LOWERTOP' \
             '# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First' > "$OUTPUT_FILE"
 
-          # 2. 抽取、清洗并格式化规则
-          # 逻辑：匹配关键词 -> 移除行首空格 -> 移除逗号后的空格 -> 转换逗号为标准格式
+          # 2. 抽取、清洗（去备注）并格式化规则
           grep -E '^(DOMAIN-|DOMAIN-WILDCARD|IP-CIDR)' source.sgmodule \
             | grep -vE '^#' \
+            | sed -E 's/\{{3}.*\}{3}//g' \
             | sed -E 's/^[[:space:]]*//' \
             | sed 's/, /,/g' \
             | awk -F, '{
-                # 重新拼装，确保只有第一个逗号后有一个空格，后续部分保持原样
                 action = $2;
                 options = "";
                 for(i=3; i<=NF; i++) options = options " " $i;
@@ -53,7 +52,6 @@ jobs:
              echo "Error: Output file is empty."
              exit 1
           fi
-          echo "Success: $OUTPUT_FILE has been updated."
 
       - name: Commit changes
         run: |
@@ -67,5 +65,5 @@ jobs:
             exit 0
           fi
           
-          git commit -m "chore: update Talkatone.payload.list format"
+          git commit -m "chore: update Talkatone.payload.list and remove bracketed notes"
           git push
