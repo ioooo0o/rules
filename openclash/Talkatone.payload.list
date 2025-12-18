@@ -70,11 +70,11 @@ DOMAIN-SUFFIX, view.adjust.com REJECT
 DOMAIN-SUFFIX, vst.c.appier.net REJECT
 DOMAIN-SUFFIX, wv.inner-active.mobi REJECT
 DOMAIN-SUFFIX, www.googletagservices-cn.com REJECT
-DOMAIN-WILDCARD, relay-*.tktn.be {{{节点检测}}}
-DOMAIN-SUFFIX, tktn.at {{{代理分流}}}
-DOMAIN-SUFFIX, tktn.be {{{代理分流}}}
-DOMAIN-SUFFIX, vm.talkatone.com {{{代理分流}}}
-DOMAIN-SUFFIX, tenor.com {{{代理分流}}}
+DOMAIN-WILDCARD, relay-*.tktn.be 
+DOMAIN-SUFFIX, tktn.at 
+DOMAIN-SUFFIX, tktn.be 
+DOMAIN-SUFFIX, vm.talkatone.com 
+DOMAIN-SUFFIX, tenor.com 
 DOMAIN-SUFFIX, agkn.com DIRECT
 DOMAIN-SUFFIX, cohere.com DIRECT
 DOMAIN-SUFFIX, crashlytics.com DIRECT
