@@ -1,7 +1,8 @@
 # NAME: Talkatone
 # REPO: https://github.com/ioooo0o/rules
+# 整理作者：https://github.com/LOWERTOP
+# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First
 payload:
-# UPDATED: Thu Dec 18 01:34:50 UTC 2025
   - DOMAIN-SUFFIX, creatives.smadex.com REJECT
   - DOMAIN-SUFFIX, static-content-1.smadex.com REJECT
   - DOMAIN-SUFFIX, imp-lb-us2.jampp.com REJECT
