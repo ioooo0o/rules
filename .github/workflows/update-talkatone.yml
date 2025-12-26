@@ -1,8 +1,9 @@
 name: Update Talkatone rules
+
 on:
   schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+    - cron: '0 0 * * *' # 每天北京时间上午 8 点运行
+  workflow_dispatch:     # 允许手动触发
 
 jobs:
   update:
@@ -26,28 +27,34 @@ jobs:
         run: |
           mkdir -p openclash
           OUTPUT_FILE="openclash/Talkatone.payload.list"
+          
+          # 获取当前北京时间
+          UPDATE_TIME=$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')
 
-          # 1. 写入 Header
-          printf '%s\n' \
-            '# NAME: Talkatone' \
-            '# REPO: https://github.com/ioooo0o/rules' \
-            '# 整理作者：https://github.com/LOWERTOP' \
-            '# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First' > "$OUTPUT_FILE"
+          # 1. 写入 Header (包含更新时间)
+          # 注意：这里涉及到变量替换，必须使用双引号包裹 printf 的内容或单独处理
+          printf "# NAME: Talkatone\n" > "$OUTPUT_FILE"
+          printf "# UPDATED: %s\n" "$UPDATE_TIME" >> "$OUTPUT_FILE"
+          printf "# REPO: https://github.com/ioooo0o/rules\n" >> "$OUTPUT_FILE"
+          printf "# 整理作者：https://github.com/LOWERTOP\n" >> "$OUTPUT_FILE"
+          printf "# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First\n" >> "$OUTPUT_FILE"
 
-          # 2. 抽取、清洗（去备注）并格式化规则
+          # 2. 抽取、清洗并格式化规则
           grep -E '^(DOMAIN-|DOMAIN-WILDCARD|IP-CIDR)' source.sgmodule \
             | grep -vE '^#' \
             | sed -E 's/\{{3}.*\}{3}//g' \
             | sed -E 's/^[[:space:]]*//' \
             | sed 's/, /,/g' \
             | awk -F, '{
-                action = $2;
+                action = $1;
+                target = $2;
+                # 如果有额外的参数（如 no-resolve），合并它们
                 options = "";
-                for(i=3; i<=NF; i++) options = options " " $i;
-                printf "%s, %s%s\n", $1, action, options
+                for(i=3; i<=NF; i++) options = options "," $i;
+                printf "%s,%s%s\n", action, target, options
               }' >> "$OUTPUT_FILE"
 
-          # 检查结果
+          # 检查结果是否为空
           if [ ! -s "$OUTPUT_FILE" ]; then
              echo "Error: Output file is empty."
              exit 1
@@ -60,10 +67,12 @@ jobs:
           
           git add openclash/Talkatone.payload.list
           
+          # 检查是否有内容变化（忽略掉时间戳行的差异）
+          # 如果你希望只要运行就强制更新时间戳并提交，可以删掉下面这个 if 判断
           if git diff --cached --quiet; then
-            echo "No changes"
+            echo "No substantial changes in rules."
             exit 0
           fi
           
-          git commit -m "chore: update Talkatone.payload.list and remove bracketed notes"
+          git commit -m "chore: update Talkatone.payload.list ($UPDATE_TIME)"
           git push
