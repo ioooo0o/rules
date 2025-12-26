@@ -1,5 +1,5 @@
 # NAME: Talkatone
-# UPDATED: 2025-12-26 14:39:08
+# UPDATED: 2025-12-26 14:41:42
 # REPO: https://github.com/ioooo0o/rules
 # 整理作者：https://github.com/LOWERTOP
 # 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First
@@ -71,11 +71,11 @@ DOMAIN-SUFFIX,view.adjust.com,REJECT
 DOMAIN-SUFFIX,vst.c.appier.net,REJECT
 DOMAIN-SUFFIX,wv.inner-active.mobi,REJECT
 DOMAIN-SUFFIX,www.googletagservices-cn.com,REJECT
-DOMAIN-WILDCARD,relay-*.tktn.be,
-DOMAIN-SUFFIX,tktn.at,
-DOMAIN-SUFFIX,tktn.be,
-DOMAIN-SUFFIX,vm.talkatone.com,
-DOMAIN-SUFFIX,tenor.com,
+DOMAIN-WILDCARD,relay-*.tktn.be
+DOMAIN-SUFFIX,tktn.at
+DOMAIN-SUFFIX,tktn.be
+DOMAIN-SUFFIX,vm.talkatone.com
+DOMAIN-SUFFIX,tenor.com
 DOMAIN-SUFFIX,agkn.com,DIRECT
 DOMAIN-SUFFIX,cohere.com,DIRECT
 DOMAIN-SUFFIX,crashlytics.com,DIRECT
