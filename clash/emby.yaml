@@ -1,14 +1,12 @@
-# NAME: ziyong
+# NAME: emby
 # AUTHOR: ioooo0o
 # REPO: https://github.com/ioooo0o/rules
 payload:
   - DOMAIN-SUFFIX,mooguu.xyz
   - DOMAIN-SUFFIX,vban.xyz
-  - DOMAIN-SUFFIX,yezi.my
   - DOMAIN-SUFFIX,v50.su
   - DOMAIN-SUFFIX,uhdnow.com
   - DOMAIN-SUFFIX,shrekmedia.org
-  - DOMAIN,jp.fc.newneeship.com,DIRECT
   - DOMAIN,cf.newneeship.com
   - DOMAIN,yp.lyezi.cc
   - DOMAIN,kuai1.lyezi.xyz
@@ -16,4 +14,3 @@ payload:
   - DOMAIN,kuai3.lyezi.xyz
   - DOMAIN,kuai5.lyezi.xyz
   - DOMAIN,zy.lyezi.xyz
-  - DOMAIN,bzy.lyezi.xyz,DIRECT
