@@ -1,0 +1,6 @@
+# NAME: emby
+# AUTHOR: ioooo0o
+# REPO: https://github.com/ioooo0o/rules
+payload:
+  - DOMAIN,jp.fc.newneeship.com,DIRECT
+  - DOMAIN,bzy.lyezi.xyz,DIRECT
